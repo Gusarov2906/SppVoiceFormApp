@@ -40,11 +40,27 @@ async function sendData(data)
       /*const audio = new Audio(fileName);
       console.log(fileName);
       audio.play();*/
-      console.log("Start play record");
 
       
    }
 
+async function GetVoiceByText()
+{
+    let csrftoken = getCookie('csrftoken');
+    let response=await fetch("/text_request", {
+    method: "post",
+    body: text,
+    headers: { "X-CSRFToken": csrftoken, 'content-type': 'text/plain' },
+    })
+      let audioChunks = await response.Blob();
+      const audioBlob = new Blob(audioChunks);
+      const audioUrl = URL.createObjectURL(audioBlob);
+      const audio = new Audio(audioUrl);
+      audio.play();
+      console.log("Start play record");
+}
+
+// Get CSRF Token by Cookie
 function getCookie(name) {
       var cookieValue = null;
       if (document.cookie && document.cookie !== '') {
