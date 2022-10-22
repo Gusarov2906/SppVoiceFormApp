@@ -20,12 +20,12 @@ def voice_request(request):
 
 def text_request(request):
     name = './file_text.wav'
-    text = request.body
+    text = request.body.decode("utf-8")
     print(text)
     tts_ = TTS()
     tts_.text_to_wav(text, name)
     f = open(name, 'rb')
     data = f.read()
     f.close()
-    return HttpResponse(text, content_type="application/octet-stream")
+    return HttpResponse(data, content_type='application/octet-stream')
 

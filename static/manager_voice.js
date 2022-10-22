@@ -14,8 +14,6 @@ function get_voice()
     mediaRecorder.addEventListener("stop", () => {
       const audioBlob = new Blob(audioChunks);
       sendData(audioBlob);
-      /*const audioUrl = URL.createObjectURL(audioBlob);*/
-      
     });
 
     setTimeout(() => {
@@ -37,27 +35,24 @@ async function sendData(data)
 
     let respText = await response.text();
       $('#field1').val(respText);
-      /*const audio = new Audio(fileName);
-      console.log(fileName);
-      audio.play();*/
-
-      
    }
 
 async function GetVoiceByText()
 {
+    var Text = $("#field1").val();
     let csrftoken = getCookie('csrftoken');
     let response=await fetch("/text_request", {
     method: "post",
-    body: text,
-    headers: { "X-CSRFToken": csrftoken, 'content-type': 'text/plain' },
+    body: Text,
+    headers: { "X-CSRFToken": csrftoken, 'content-type': 'text/plain; charset=UTF-8' },
     })
-      let audioChunks = await response.Blob();
-      const audioBlob = new Blob(audioChunks);
-      const audioUrl = URL.createObjectURL(audioBlob);
+
+      var blob = await response.blob();
+      const audioUrl = URL.createObjectURL(blob);
       const audio = new Audio(audioUrl);
       audio.play();
-      console.log("Start play record");
+
+      //console.log("Start play record");
 }
 
 // Get CSRF Token by Cookie
