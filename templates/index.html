@@ -6,20 +6,51 @@
     <meta charset="UTF-8">
     <title>Здравствуй!</title>
     <script src="{% static 'manager_voice.js' %}"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
+    <link href="//cdn.muicss.com/mui-0.10.3/css/mui.min.css" rel="stylesheet" type="text/css"/>
+    <script src="//cdn.muicss.com/mui-0.10.3/js/mui.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+          integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
     <link rel="stylesheet" href="../static/style.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
-<body>
+<body style="background-color: #2994DB;">
 
 <div class="container">
-    <h1 class="text-center Title" style="position: absolute; bottom: 50%">ТЕСТ</h1>
+    <div class="row">
+        <div class="col-6 offset-3 mui-panel mt-4">
+            <button onclick="get_voice()">Запись голоса</button>
+            <button onclick="GetVoiceByText()">Воспроизвести текст</button>
+            <input type="text" class="form-control" id='field1'/>
+            <
+            <form class="mui-form">
+                <legend>Title</legend>
+                <button type="text" class="mui-btn  mui-btn--primary height:100%;">Заполнить форму</button>
+                <div class="mui-textfield mui-textfield--float-label">
+                    <input type="text">
+                    <label>Input 1</label>
+                </div>
+                <div class="mui-textfield mui-textfield--float-label">
+                    <input type="text" class="mui-text-light" value="Value on load">
+                    <label class="mui-text-light">Input 2</label>
+                </div>
+                <div class="mui-textfield mui-textfield--float-label">
+                    <textarea>Value on load</textarea>
+                    <label>Textarea</label>
+                </div>
+                <div style="display:flex; flex-wrap:wrap; justify-content: space-between;">
+                    <div>
+                        <button type="submit" class="mui-btn  mui-btn--primary mx-auto">Отправить</button>
+                    </div>
+                    <div>
+                        <button type="submit" class="mui-btn mui-btn--raised mx-auto">Очистить</button>
+                    </div>
+                </div>
+        </div>
+        </form>
+    </div>
 </div>
-
-<button onclick="get_voice()">Запись голоса</button>
-<button onclick="GetVoiceByText()">Воспроизвести текст</button>
-  <input type="text" class="form-control" id='field1'/>
-
+</div>
 {% csrf_token %}
 
 
