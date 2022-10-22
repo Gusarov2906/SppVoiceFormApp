@@ -1,13 +1,14 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from .stt import STT
+from .tts import TTS
 
 
 def index(request):
     return render(request, 'index.html')
 
 def voice_request(request):
-    name = './file.wav'
+    name = './file_sound.wav'
     text = 'none'
     #print(request.body)
     f = open(name, 'wb')
@@ -15,7 +16,16 @@ def voice_request(request):
     f.close()
     stt_ = STT()
     text = stt_.audio_to_text(name)
-    print(text)
-    #return HttpResponse('audio received')
     return HttpResponse(text, content_type="text/plain")
-# Create your views here.
+
+def text_request(request):
+    name = './file_text.wav'
+    text = request.body
+    print(text)
+    tts_ = TTS()
+    tts_.text_to_wav(text, name)
+    f = open(name, 'rb')
+    data = f.read()
+    f.close()
+    return HttpResponse(text, content_type="application/octet-stream")
+
