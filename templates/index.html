@@ -1,10 +1,10 @@
-{% load static %}
 <!DOCTYPE html>
+{% load static %}
 <!-- {% load static %} -->
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Здравствуй!</title>
+    <title>СпецДорПроект</title>
     <script src="{% static 'manager_voice.js' %}"></script>
     <link href="//cdn.muicss.com/mui-0.10.3/css/mui.min.css" rel="stylesheet" type="text/css"/>
     <script src="//cdn.muicss.com/mui-0.10.3/js/mui.min.js"></script>
@@ -19,25 +19,83 @@
 <div class="container">
     <div class="row">
         <div class="col-6 offset-3 mui-panel mt-4">
-            <button onclick="get_voice()">Запись голоса</button>
-            <button onclick="GetVoiceByText()">Воспроизвести текст</button>
-            <input type="text" class="form-control" id='field1'/>
-            <
             <form class="mui-form">
-                <legend>Title</legend>
-                <button type="text" class="mui-btn  mui-btn--primary height:100%;">Заполнить форму</button>
-                <div class="mui-textfield mui-textfield--float-label">
-                    <input type="text">
-                    <label>Input 1</label>
+                <legend> <h3> <b> Заявка о неисправности </b> </h3> </legend>
+                <button type="text" class="mui-btn  mui-btn--primary height:100%;">Заполнить форму с помощью голоса
+                </button>
+
+                <div class="mui-textfield mt-3">
+                    <label>Выберите тип объекта</label>
+                    <div class="mui-radio">
+                        <label>
+                            <input type="radio"
+                                   name="optionsTypeObject"
+                                   id="optionsTrafficLight"
+                                   value="traffic_light"
+                                   checked>
+                            Светофор
+                        </label>
+                    </div>
+                    <div class="mui-radio">
+                        <label>
+                            <input type="radio"
+                                   name="optionsTypeObject"
+                                   id="optionsCamera"
+                                   value="camera">
+                            Камера
+                        </label>
+                    </div>
+                    <div class="mui-radio">
+                        <label>
+                            <input type="radio"
+                                   name="optionsTypeObject"
+                                   id="optionsOther"
+                                   value="other">
+                            Другое
+                        </label>
+                    </div>
                 </div>
-                <div class="mui-textfield mui-textfield--float-label">
-                    <input type="text" class="mui-text-light" value="Value on load">
-                    <label class="mui-text-light">Input 2</label>
+
+
+                <div class="mui-textfield">
+                    <input type="number">
+                    <label>Введите идентификатор объекта</label>
                 </div>
-                <div class="mui-textfield mui-textfield--float-label">
-                    <textarea>Value on load</textarea>
-                    <label>Textarea</label>
+
+                <div class="mui-select">
+                    <select>
+                        <option>Программный сбой в работе</option>
+                        <option>Физическая поломка</option>
+                        <option>Другой тип неисправности</option>
+                    </select>
+                    <label>Выберите тип неисправности</label>
                 </div>
+
+                <div class="mui-textfield">
+                    <input type="text" class="mui-text-light">
+                    <label class="mui-text-light">Коротко опишите неисправность</label>
+                </div>
+
+                <div class="mui-textfield">
+                    <input type="date" class="mui-text-light">
+                    <label class="mui-text-light">Введите дату фиксации неисправности</label>
+                </div>
+
+                <div class="mui-textfield">
+                    <input type="time" class="mui-text-light">
+                    <label class="mui-text-light">Введите время фиксации неисправности</label>
+                </div>
+
+                <div class="mui-textfield">
+                    <input type="text" class="mui-text-light">
+                    <label class="mui-text-light">Где произошла неисправность</label>
+                </div>
+
+                <div class="mui-textfield mui-textfield--float-label">
+                    <input type="text" class="mui-text-light">
+                    <label class="mui-text-light">Комментарий</label>
+                </div>
+
                 <div style="display:flex; flex-wrap:wrap; justify-content: space-between;">
                     <div>
                         <button type="submit" class="mui-btn  mui-btn--primary mx-auto">Отправить</button>
@@ -46,10 +104,9 @@
                         <button type="submit" class="mui-btn mui-btn--raised mx-auto">Очистить</button>
                     </div>
                 </div>
+            </form>
         </div>
-        </form>
     </div>
-</div>
 </div>
 {% csrf_token %}
 
