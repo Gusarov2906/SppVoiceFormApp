@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .stt import STT
 from .tts import TTS
+from text_to_num import alpha2digit
 
 
 def index(request):
@@ -16,6 +17,7 @@ def voice_request(request):
     f.close()
     stt_ = STT()
     text = stt_.audio_to_text(name)
+    text = alpha2digit(text, 'ru')
     return HttpResponse(text, content_type="text/plain")
 
 def text_request(request):
