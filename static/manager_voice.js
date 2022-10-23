@@ -106,8 +106,8 @@ async function Algorithm()
 {
     await GetVoiceByText("Привет. Я голосовой помощник Ксения и я помогу Вам заполнить форму о неисправности. Если вы захотите пропустить ввод значения в одно из полей скажите слово пропустить");
 
-    //await CompletingField("field1");
-    //await CompletingField("field2");
+    await CompletingField("field1");
+    await CompletingField("field2");
     await CompletingField("field3");
     await CompletingField("field4");
     await CompletingField("field5");
@@ -167,11 +167,11 @@ async function GetVoiceToSend(timeToSpeak)
     const sleep = time => new Promise(resolve => setTimeout(resolve, time));
     const recorder = await recordAudio();
 
-    await PlayAudioByFile("/static/audio/pi.mp3");
+    await PlayAudioByFile("/static/audio/pi.wav");
     recorder.start();
 
     await sleep(timeToSpeak);
-    await PlayAudioByFile("/static/audio/pi.mp3");
+    await PlayAudioByFile("/static/audio/pi.wav");
     var txt = await recorder.stop();
     return txt;
 }
