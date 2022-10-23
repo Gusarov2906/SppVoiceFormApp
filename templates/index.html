@@ -24,7 +24,7 @@
                 <button type="button" class="mui-btn  mui-btn--primary height:100%;" onclick="Algo()">Заполнить форму с помощью голоса
                 </button>
 
-                <div class="mui-textfield mt-3" id="field1">
+                <div class="mui-textfield mt-3" id="field1" data-time="3000" data-ftype="radio" data-tvoice="Для выбора типа объекта, проговорите номер выбранного типа. 1 - Светофор. 2 - Камера. 3 - Другое">
                     <label>Выберите тип объекта</label>
                     <div class="mui-radio">
                         <label>
@@ -58,12 +58,12 @@
 
 
                 <div class="mui-textfield">
-                    <input type="number" id="field2">
+                    <input type="number" id="field2" data-time="4000" data-ftype="number" data-tvoice="Для заполнения поля идентификатор объекта проговорите его">
                     <label>Введите идентификатор объекта</label>
                 </div>
 
                 <div class="mui-select">
-                    <select id="field3">
+                    <select id="field3" data-time="3000" data-ftype="select" data-tvoice="Для выбора типа неисправности, проговорите номер выбранного типа. 1 - Программный сбой. 2 - Поломка. 3 - Другой">
                         <option value="field3-variant1">Программный сбой в работе</option>
                         <option value="field3-variant2">Физическая поломка</option>
                         <option value="field3-variant3">Другой тип неисправности</option>
@@ -72,23 +72,23 @@
                 </div>
 
                 <div class="mui-textfield">
-                    <input type="text" id="field4" class="mui-text-light">
+                    <input type="text" id="field4" class="mui-text-light" data-time="5000" data-ftype="text" data-tvoice="Коротко расскажите про неисправность">
                     <label class="mui-text-light">Коротко опишите неисправность</label>
                 </div>
 
                 <div class="mui-textfield">
-                    <input type="time" id="field5" class="mui-text-light">
+                    <input type="time" id="field5" data-time="3000" data-ftype="time" data-tvoice="Уточните время неисправности" class="mui-text-light">
                     <label class="mui-text-light">Введите время фиксации неисправности</label>
                 </div>
 
                 <div class="mui-textfield">
-                    <input type="text" id="field6" class="mui-text-light">
+                    <input type="text" id="field6" data-time="3000" data-ftype="text" data-tvoice="Скажите где примерно обнаружена неисправность" class="mui-text-light">
                     <label class="mui-text-light">Где произошла неисправность</label>
                 </div>
 
                 <div class="mui-textfield mui-textfield--float-label">
-                    <input type="text" id="field7" class="mui-text-light">
-                    <label class="mui-text-light">Комментарий</label>
+                    <input type="text" id="field7" data-time="3000" data-ftype="text" data-tvoice="Прокомментируйте неисправность. При нежелании давать комментарий скажите Пропустить" class="mui-text-light">
+                    <label>Комментарий</label>
                 </div>
 
                 <div style="display:flex; flex-wrap:wrap; justify-content: space-between;">

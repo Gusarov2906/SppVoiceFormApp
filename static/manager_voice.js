@@ -1,50 +1,60 @@
+async function AlgoValue(id)
+{
+    var idt = "#" + id;
+    var time_speak = Number($(idt).data("time"));
+    var field_type = $(idt).data("ftype");
+    var text_to_voice = $(idt).data("tvoice");
+
+    $(idt).focus().click();
+    await GetVoiceByText(text_to_voice);
+    var text = await GetVoice(time_speak);
+
+    console.log(text);
+
+    switch(field_type) {
+        case 'text':
+           $(idt).val(text);
+           $(idt).attr("class", "mui-text-light mui--is-touched mui--is-dirty mui--is-not-empty");
+           break;
+        case 'number':
+            text = text.replace(/\D/g, '');
+            console.log(text);
+            $(idt).val(Number(text));
+            break;
+        case 'time':
+            text = text.replace(/\D/g, '');
+            if (text.length < 4)
+            {
+                text = "0".concat(text);
+            }
+
+            $(idt).val(text.substr(0, text.length/2) + ':' + text.substr(text.length/2));
+            break;
+        case 'radio':
+            $(idt + "-variant" + text).click();
+            break;
+        case 'select':
+            $(idt + ' option[value=' + id + '-variant'+ text + ']').prop('selected', 'selected').change();
+            $(idt).blur();
+            break;
+
+}
+}
+
 async function Algo()
 {
     await GetVoiceByText("Привет. Я голосовой помощник Ксения и я помогу Вам заполнить форму о неисправности");
-    $("#field1").focus();
-    await GetVoiceByText("Для выбора типа объекта, проговорите номер выбранного типа. 1 - Светофор. 2 - Камера. 3 - Другое");
-    var text = await GetVoice();
-    $("#field1-variant".concat(text)).click();
-    console.log(text);
-
-    $("#field2").focus();
-    await GetVoiceByText("Для заполнения поля идентификатор объекта проговорите его");
-    var text = await GetVoice();
-    console.log(text);
-    $("#field2").val(text);
-
-    $("#field3").focus().click();
-    await GetVoiceByText("Для выбора типа неисправности, проговорите номер выбранного типа. 1 - Программный сбой. 2 - Поломка. 3 - Другой");
-    var text = await GetVoice();
-    $('#field3 option[value=field3-variant'.concat(text.concat(']'))).prop('selected', 'selected').change();
-    $("#field3").blur();
-    console.log(text);
-
-    $("#field4").focus().click();
-    await GetVoiceByText("Коротко расскажите про неисправность");
-    var text = await GetVoice();
-    $("#field4").val(text);
-
-    $("#field5").focus();
-    await GetVoiceByText("Уточните время неисправности");
-    var text = await GetVoice();
-    text = text.replace(' ', ':');
-    $("#field5").val(text);
-
-    $("#field6").focus();
-    await GetVoiceByText("Скажите где примерно обнаружена неисправность");
-    var text = await GetVoice();
-    $("#field6").val(text);
-
-    $("#field7").focus();
-    await GetVoiceByText("Прокомментируйте неисправоность. При нежелании давать комментарий скажите Пропустить");
-    var text = await GetVoice();
-    $("#field7").val(text);
-
+    await AlgoValue("field1");
+    await AlgoValue("field2");
+    await AlgoValue("field3");
+    await AlgoValue("field4");
+    await AlgoValue("field5");
+    await AlgoValue("field6");
+    await AlgoValue("field7");
     console.log("END");
 }
 
-async function GetVoice()
+async function GetVoice(timeToSpeak)
 {
     const recordAudio = () =>
   new Promise(async resolve => {
@@ -77,21 +87,13 @@ const recorder = await recordAudio();
 console.log("For start");
 await PlayAudioByFile("/static/audio/pi.mp3");
 recorder.start();
-  await sleep(3000);
+  await sleep(timeToSpeak);
   console.log("For stop");
   await PlayAudioByFile("/static/audio/pi.mp3");
   var txt = await recorder.stop();
   console.log("Return blb");
   return txt;
 
-}
-
-function timeout(ms) {
-    return new Promise(resolve => setTimeout(resolve, ms));
-}
-async function sleep(fn, ...args) {
-    await timeout(3000);
-    return fn(...args);
 }
 
 async function sendData(data)
