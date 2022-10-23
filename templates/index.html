@@ -21,17 +21,15 @@
         <div class="col-6 offset-3 mui-panel mt-4">
             <button onclick="get_voice()">Запись голоса</button>
             <button onclick="GetVoiceByText()">Воспроизвести текст</button>
-            <input type="text" class="form-control" id='field1'/>
-            <
             <form class="mui-form">
                 <legend>Title</legend>
-                <button type="text" class="mui-btn  mui-btn--primary height:100%;">Заполнить форму</button>
+                <button type="button" class="mui-btn  mui-btn--primary height:100%;" onclick="Algo()">Заполнить форму</button>
                 <div class="mui-textfield mui-textfield--float-label">
-                    <input type="text">
-                    <label>Input 1</label>
+                    <input type="text" id="field1">
+                    <label>Локация</label>
                 </div>
                 <div class="mui-textfield mui-textfield--float-label">
-                    <input type="text" class="mui-text-light" value="Value on load">
+                    <input type="time" class="mui-text-light" value="13:15">
                     <label class="mui-text-light">Input 2</label>
                 </div>
                 <div class="mui-textfield mui-textfield--float-label">
@@ -49,7 +47,6 @@
         </div>
         </form>
     </div>
-</div>
 </div>
 {% csrf_token %}
 

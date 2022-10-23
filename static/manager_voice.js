@@ -1,31 +1,97 @@
-function get_voice()
-  {
-    navigator.mediaDevices.getUserMedia({ audio: true })
-  .then(stream => {
-    const mediaRecorder = new MediaRecorder(stream);
-    mediaRecorder.start();
-    console.log("Start record");
+async function Algo()
+{
+    await GetVoiceByText("Привет. Перейдём к заполнению поля 1");
+    $("#field1").focus();
+    await GetVoiceByText("Для поля Локация проговорите примерное место нахождения объекта");
+    var text = await GetVoice();
+    console.log(text);
+    $("#field1").val(text);
+    console.log("END");
+}
 
+async function GetVoice()
+{
+    const recordAudio = () =>
+  new Promise(async resolve => {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    const mediaRecorder = new MediaRecorder(stream);
     const audioChunks = [];
+
     mediaRecorder.addEventListener("dataavailable", event => {
       audioChunks.push(event.data);
     });
 
-    mediaRecorder.addEventListener("stop", () => {
-      const audioBlob = new Blob(audioChunks);
-      sendData(audioBlob);
+    const start = () => mediaRecorder.start();
+
+    const stop = () =>
+      new Promise(resolve => {
+        mediaRecorder.addEventListener("stop", async () => {
+          var audioBlob = new Blob(audioChunks);
+          resolve(await sendData(audioBlob));
+        });
+
+        mediaRecorder.stop();
+      });
+
+      resolve({ start, stop });
+  });
+
+const sleep = time => new Promise(resolve => setTimeout(resolve, time));
+
+const recorder = await recordAudio();
+recorder.start();
+  await sleep(3000);
+  console.log("For stop");
+  var txt = await recorder.stop();
+  console.log("Return blb");
+  return txt;
+
+}
+
+
+/*async function GetVoice()
+  {
+    await navigator.mediaDevices.getUserMedia({ audio: true })
+  .then(async stream =>  {
+
+    const mediaRecorder = new MediaRecorder(stream);
+    const audioChunks = [];
+    await mediaRecorder.addEventListener("dataavailable", async event => {
+      await audioChunks.push(event.data);
+    });
+
+    await mediaRecorder.start();
+    console.log("Start record");
+    await sleep(async () => { } );
+    mediaRecorder.stop();
+    console.log("Stop record");
+    const audioBlob = new Blob(audioChunks);
+      return await sendData(audioBlob);
+
+
+    /*await mediaRecorder.addEventListener("stop", async () => {
+
     });
 
     setTimeout(() => {
-      mediaRecorder.stop();
-      console.log("Stop record");
+
+
     }, 3000);
   });
     
-  }
+  }*/
+
+function timeout(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+async function sleep(fn, ...args) {
+    await timeout(3000);
+    return fn(...args);
+}
 
 async function sendData(data) 
     {
+    console.log("SendData");
     let csrftoken = getCookie('csrftoken');
     let response=await fetch("/voice_request", {
     method: "post",
@@ -33,13 +99,14 @@ async function sendData(data)
     headers: { "X-CSRFToken": csrftoken },
     })
 
-    let respText = await response.text();
-      $('#field1').val(respText);
+    var text = await response.text();
+    return text;
    }
 
-async function GetVoiceByText()
+async function GetVoiceByText(text)
 {
-    var Text = $("#field1").val();
+    var Text = text;
+    console.log(Text);
     let csrftoken = getCookie('csrftoken');
     let response=await fetch("/text_request", {
     method: "post",
@@ -48,12 +115,22 @@ async function GetVoiceByText()
     })
 
       var blob = await response.blob();
-      const audioUrl = URL.createObjectURL(blob);
-      const audio = new Audio(audioUrl);
-      audio.play();
-
-      //console.log("Start play record");
+      await PlayAudioByBlob(blob);
 }
+
+async function PlayAudioByBlob(blob)
+{
+    const audioUrl = URL.createObjectURL(blob);
+    const audio = new Audio(audioUrl);
+
+    var p = new Promise(res=>{
+    audio.play()
+    audio.onended = res
+  });
+await p;
+}
+
+
 
 // Get CSRF Token by Cookie
 function getCookie(name) {
