@@ -19,7 +19,7 @@ class TTS:
     default_init = {
         "sample_rate": 24000,
         "device_init": "cpu",
-        "threads": 4,
+        "threads": 8,
         "speaker_voice": "kseniya",
         "model_path": "models/silero/model.pt",  # путь к файлу TTS модели Silero
         "model_url": "https://models.silero.ai/models/tts/ru/v3_1_ru.pt",  # URL к TTS модели Silero
