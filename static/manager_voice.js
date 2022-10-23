@@ -20,7 +20,7 @@ async function CompletingField(id)
     var field_type = $(idt).data("ftype");
     var text_to_voice = $(idt).data("tvoice");
 
-    $(idt).focus().click();
+    $(idt).click().focus();
     await GetVoiceByText(text_to_voice);
 
     while (true)
@@ -36,6 +36,7 @@ async function CompletingField(id)
             else
             {
                 await GetVoiceByText("Данное поле обязательно для заполнения. Его нельзя пропустить. Пожалуйста повторите ввод");
+                continue;
             }
         }
 
@@ -105,8 +106,8 @@ async function Algorithm()
 {
     await GetVoiceByText("Привет. Я голосовой помощник Ксения и я помогу Вам заполнить форму о неисправности. Если вы захотите пропустить ввод значения в одно из полей скажите слово пропустить");
 
-    await CompletingField("field1");
-    await CompletingField("field2");
+    //await CompletingField("field1");
+    //await CompletingField("field2");
     await CompletingField("field3");
     await CompletingField("field4");
     await CompletingField("field5");
